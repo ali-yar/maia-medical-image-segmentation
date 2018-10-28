@@ -1,5 +1,5 @@
-function testDiffusion ()
-num_iter = 100;
+
+num_iter = 5;
 delta_t = 0.25; % controls speed of diffusion
 kappa = 5; % the diffusion constant or flow constant / controls sensitivity to edges.
 option = 1; % Diffusion equation 1 favours high contrast edges over low contrast ones.

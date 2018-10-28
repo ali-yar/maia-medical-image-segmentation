@@ -69,10 +69,10 @@ for nn = 1:N_scan
         pause(0.1);
         figure(1);
         subplot(1,2,1);
-        imagesc(Img3D(:,:,N_slc));colormap(gray);
+        imshow(Img3D(:,:,N_slc)',[]);
         title('a 2D slice of 3D image');
         subplot(1,2,2);
-        imagesc(PC2d);colormap(gray);  
+        imshow(PC2d',[]);
         title('a 2D slice of 3D segmentation result');
         C_new = C/norm(C);
 
@@ -96,6 +96,17 @@ for nn = 1:N_scan
     save_nii(pc3d,[str,'_seg.nii']);   % save the segmentation result
     img_bc = zeros(DimX1, DimY1, DimZ1);
     img_bc(x1:x2,y1:y2,z1:z2)=Img3D./b;     
+    
+    figure;
+    subplot(1,3,1), imshow(Img3D(:,:,N_slc)',[]);
+    title("Image");
+    subplot(1,3,2), imshow((b(:,:,N_slc).*ROI(:,:,N_slc))',[]);
+    title("Bias field");
+    subplot(1,3,3), imshow(img_bc(x1:x2,y1:y2,N_slc+z1)',[]);
+    title("Bias corrected");
+    b=make_nii(b);
+    save_nii(b,[str,'_bf.nii']);  % save bias field
+    
     clear b Img3D;
     Img_bc=make_nii(img_bc);
     save_nii(Img_bc,[str,'_bc.nii']);  % save bias field corrected image

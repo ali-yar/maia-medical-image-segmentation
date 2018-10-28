@@ -15,7 +15,7 @@ t1 = load_nii('T1_.nii');
 t2 = load_nii('T2_FLAIR_.nii');
 
 
-gt_img = grounTruth.img(:,:,105);
+gt_img = uint8(grounTruth.img(:,:,105));
 mask_img = gt_img > 0;
 
 img = t1.img(:,:,105);
@@ -26,6 +26,11 @@ mask = mask_img(:);
 
 idx = expectation_maximization(x, mask);
 
+seg = reshape(idx,size(img));
+
+figure;
 imshow(img,[]);
+figure;
+imshow(seg,[]);
 figure;
 imshow(gt_img,[]);
